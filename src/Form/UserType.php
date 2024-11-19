@@ -24,7 +24,7 @@ class UserType extends AbstractType
                 'label' => 'Password',
                 'hash_property_path' => 'password',
                 'mapped' => false,
-                'attr' => ['class' => 'form-control my-2', 'placeholder' => 'Password'],        
+                'attr' => ['class' => 'form-control my-2', 'placeholder' => 'Password'],
             ])
             ->add('age', NumberType::class, [
                 'label' => 'Age',

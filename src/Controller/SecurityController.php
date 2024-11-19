@@ -9,13 +9,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
     #[Route(path: '/register', name: 'myrig_register')]
-    public function register(Request $request, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $entityManager): Response
     {
         $registrationForm = $this->createForm(UserType::class);
         $registrationForm->handleRequest($request);
@@ -24,7 +25,8 @@ class SecurityController extends AbstractController
             $user = new User();
             $user->setRoles(['ROLE_USER']);
             $user->setUsername($registrationForm->get('username')->getData());
-            $user->setPassword($registrationForm->get('password')->getData());
+            $hash = $passwordHasher->hashPassword($user, $registrationForm->get('password')->getData());
+            $user->setPassword($hash);
             $user->setAge($registrationForm->get('age')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
