@@ -39,9 +39,13 @@
                                     Account
                                 </a>
                                 <ul class="dropdown-menu bg-dark">
-                                    <li><a class="dropdown-item text-light" href="#">Sign In</a></li>
-                                    <li><a class="dropdown-item text-light" href="#">Login</a></li>
-                                </ul>
+                                    {% if(app.user) %}
+                                        <li><a class="dropdown-item text-light" href="/logout">Logout</a></li>
+                                    {% else %}
+                                        <li><a class="dropdown-item text-light" href="/register">Sign In</a></li>
+                                        <li><a class="dropdown-item text-light" href="/login">Login</a></li>
+                                    {% endif %}
+                                </ul>   
                             </li>
                         </ul>
                     </div>
