@@ -30,7 +30,7 @@ class SecurityController extends AbstractController
             $user->setAge($registrationForm->get('age')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->redirectToRoute('myrig_register');
+            return $this->redirectToRoute('myrig_login');
         }
 
         return $this->render('security/register.html.twig', [

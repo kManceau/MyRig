@@ -22,7 +22,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <span class="navbar-text ms-auto text-light">
-                              Welcome
+                              Welcome {% if app.user %} back {{ app.user.username }} {% endif %}
                             </span>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
