@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register - MyRig!{% endblock %}
+
+{% block body %}
+    <section class="card text-white bg-dark container-lg">
+        <div class="card-body">
+            <div class="registration-text">
+                <h2 class="mb-4">Register to MyRig!</h2>
+                <p>You need to register to start using its cool and multiple features !</p>
+                <p>Hurry up, it might not stay free for long ...</p>
+            </div>
+            <div class="registration-form my-5">
+                {{ form_start(registrationForm) }}
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}
