@@ -7,6 +7,14 @@
     <div class="card-body">
         <h2>Curious about our other <s>customers</s> users rig ?</h2>
         <p>You're in the right place for that !</p>
+        <div class="row">
+                {% for user in users %}
+                    <div class="col">
+                        <img src="/images/users/default.webp" alt="default-avatar" class="avatar" loading="lazy" />
+                        <p>{{ user.username }}</p>
+                    </div>
+                {% endfor %}
+        </div>
     </div>
 </section>
 {% endblock %}
