@@ -3,4 +3,12 @@
 {% block title %}MyRig! - Welcome{% endblock %}
 
 {% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success container-lg">
+            <buton type="button" class="btn-close" data-bs-dismiss="alert"></buton>
+            {{ message }}
+        </div>
+    {% endfor %}
+
 {% endblock %}

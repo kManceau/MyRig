@@ -7,16 +7,19 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class SecurityController extends AbstractController
 {
     #[Route(path: '/register', name: 'myrig_register')]
-    public function register(Request $request, UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
     {
         $registrationForm = $this->createForm(UserType::class);
         $registrationForm->handleRequest($request);
@@ -30,7 +33,11 @@ class SecurityController extends AbstractController
             $user->setAge($registrationForm->get('age')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->redirectToRoute('myrig_login');
+            $this->addFlash('success', 'You are now successfully registered!');
+            $providerKey = 'main';
+            $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
+            $this->container->get('security.token_storage')->setToken($token);
+            return $this->redirectToRoute('myrig_index');
         }
 
         return $this->render('security/register.html.twig', [
@@ -43,10 +50,8 @@ class SecurityController extends AbstractController
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
