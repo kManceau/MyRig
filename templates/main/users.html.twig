@@ -3,18 +3,26 @@
 {% block title %}MyRig! - Welcome{% endblock %}
 
 {% block body %}
-<section class="card text-white bg-dark container-lg">
-    <div class="card-body">
-        <h2>Curious about our other <s>customers</s> users rig ?</h2>
-        <p>You're in the right place for that !</p>
-        <div class="row">
+    <section class="card text-white bg-dark container-lg">
+        <div class="card-body">
+            <h2>Curious about our other <s>customers</s> users rig ?</h2>
+            <p>You're in the right place for that !</p>
+            <div class="avatar-grid">
                 {% for user in users %}
-                    <div class="col">
-                        <img src="/images/users/default.webp" alt="default-avatar" class="avatar" loading="lazy" />
+                    <div class="avatar-container">
+                        <div class="avatar">
+                            {% if file_exists('../public/images/users/' ~ user.id ~ '.webp') %}
+                                <img src="/images/users/{{ user.id }}.webp" alt="{{ user.username }}-avatar"
+                                     class="avatar-image" loading="lazy"/>
+                            {% else %}
+                                <img src="/images/users/default.webp" alt="default-avatar" class="avatar-image"
+                                     loading="lazy"/>
+                            {% endif %}
+                        </div>
                         <p>{{ user.username }}</p>
                     </div>
                 {% endfor %}
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock %}
