@@ -3,6 +3,14 @@
 {% block title %}Register - MyRig!{% endblock %}
 
 {% block body %}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-dismissible alert-danger container-lg">
+            <buton type="button" class="btn-close" data-bs-dismiss="alert"></buton>
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <section class="card text-white bg-dark container-lg">
         <div class="card-body">
             <div class="registration-text">

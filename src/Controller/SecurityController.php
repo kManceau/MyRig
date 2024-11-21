@@ -19,12 +19,17 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class SecurityController extends AbstractController
 {
     #[Route(path: '/register', name: 'myrig_register')]
-    public function register(Request $request, UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
+    public function register(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
     {
         $registrationForm = $this->createForm(UserType::class);
         $registrationForm->handleRequest($request);
 
         if($registrationForm->isSubmitted() && $registrationForm->isValid()) {
+            $alreadyExisting = $userRepository->findOneBy(['username' => $registrationForm->get('username')->getData()]);
+            if($alreadyExisting) {
+                $this->addFlash('error', 'Username already exists.');
+                return $this->redirectToRoute('myrig_register');
+            }
             $user = new User();
             $user->setRoles(['ROLE_USER']);
             $user->setUsername($registrationForm->get('username')->getData());
