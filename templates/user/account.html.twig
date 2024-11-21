@@ -2,16 +2,42 @@
 
 {% block title %}MyRig! - My Account{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('javascript/deleteAccount.js') }}"></script>
+{% endblock %}
+
 {% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success container-lg">
+            <buton type="button" class="btn-close" data-bs-dismiss="alert"></buton>
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <section class="card text-white bg-dark container-lg">
         <div class="card-body">
             <div class="registration-text">
-                <h2 class="mb-4">My Account</h2>
-                <p>Modify your data. You can't change your password because I was too lazy for now ...</p>
+                <h2 class="mb-4">{{ user.username }}</h2>
+                    {% if file_exists('../public/images/users/' ~ user.id ~ '.webp') %}
+                        <picture>
+                            <source srcset="/images/users/{{ user.id }}.webp" type="image/webp">
+                            <img src="/images/users/{{ user.id }}.jpg" alt="{{ user.username }}-avatar"
+                                 class="user-avatar" loading="lazy"/>
+                        </picture>
+                    {% else %}
+                        <picture>
+                            <source srcset="/images/users/default.webp" type="image/webp">
+                            <img src="/images/users/default.jpg" alt="default-avatar"
+                                 class="user-avatar" loading="lazy"/>
+                        </picture>
+                    {% endif %}
             </div>
             <div class="account-form my-5">
                 {{ form_start(accountForm) }}
                 {{ form_end(accountForm) }}
+                <a id="delete-account-button" class="btn btn-danger mt-2" href="/delete/{{ user.id }}">Delete your account ?</a>
             </div>
         </div>
     </section>
