@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\InstrumentRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,13 @@ class MainController extends AbstractController
 
         return $this->render('main/users.html.twig', [
             'users' => $userList,
+        ]);
+    }
+
+    #[Route('/rig', name: 'myrig_rig')]
+    public function rig(InstrumentRepository $instrumentRepository): Response
+    {
+        return $this->render('main/rig.html.twig', [
         ]);
     }
 }
