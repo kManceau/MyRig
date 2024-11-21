@@ -1,25 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MyRig! - Welcome{% endblock %}
+{% block title %}MyRig! - Users{% endblock %}
 
 {% block body %}
     <section class="card text-white bg-dark container-lg">
         <div class="card-body">
             <h2>Curious about our other <s>customers</s> users rig ?</h2>
             <p>You're in the right place for that !</p>
-            <div class="avatar-grid">
+            <div class="user-grid">
                 {% for user in users %}
-                    <div class="avatar-container">
-                        <div class="avatar">
+                    <div class="user">
                             {% if file_exists('../public/images/users/' ~ user.id ~ '.webp') %}
-                                <img src="/images/users/{{ user.id }}.webp" alt="{{ user.username }}-avatar"
-                                     class="avatar-image" loading="lazy"/>
+                                <picture>
+                                    <source srcset="/images/users/{{ user.id }}.webp" type="image/webp">
+                                    <img src="/images/users/{{ user.id }}.jpg" alt="{{ user.username }}-avatar"
+                                         class="user-avatar" loading="lazy"/>
+                                </picture>
                             {% else %}
-                                <img src="/images/users/default.webp" alt="default-avatar" class="avatar-image"
-                                     loading="lazy"/>
+                                <picture>
+                                    <source srcset="/images/users/default.webp" type="image/webp">
+                                    <img src="/images/users/default.jpg" alt="default-avatar"
+                                         class="user-avatar" loading="lazy"/>
+                                </picture>
                             {% endif %}
-                        </div>
-                        <p>{{ user.username }}</p>
+                        <a href="#" class="user-name text-light">{{ user.username }}</a>
                     </div>
                 {% endfor %}
             </div>

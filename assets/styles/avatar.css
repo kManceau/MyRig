@@ -1,13 +1,17 @@
-.avatar-grid{
-    display: flex;
+.user-grid{
+    display: grid;
+    justify-items: center;
     gap: 2rem;
+    text-align: center;
 }
-.avatar{
-    max-width: 7.5rem;
-    max-height: 7.5rem;
-    margin-block-end: 1rem;
+.user{
+    width: 100%;
+    display: grid;
+    gap: 1rem;
 }
-.avatar-image{
-    max-width: 100%;
-    object-fit: fill !important;
+.user-avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
 }
