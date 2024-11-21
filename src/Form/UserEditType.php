@@ -16,14 +16,14 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class, [
-                'label' => 'Username',
-                'attr' => ['class' => 'form-control my-2', 'placeholder' => 'Username'],
-                'disabled' => true,
-            ])
             ->add('age', NumberType::class, [
                 'label' => 'Age',
                 'attr' => ['class' => 'form-control my-2', 'placeholder' => '00'],
+            ])
+            ->add('catchphrase', TextType::class, [
+                'label' => 'Catchphrase (Optional, 255 characters max)',
+                'attr' => ['class' => 'form-control my-2', 'placeholder' => 'Catchphrase'],
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Submit',

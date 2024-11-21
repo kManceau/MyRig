@@ -34,14 +34,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\Length(min: 8)]
-    #[Assert\NotBlank]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\NotBlank]
-    #[Assert\Type(Types::SMALLINT)]
     #[Assert\Length(min: 1, max: 150)]
     private ?int $age = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
+    private ?string $catchphrase = null;
 
     public function getId(): ?int
     {
@@ -125,6 +127,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAge(int $age): static
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function getCatchphrase(): ?string
+    {
+        return $this->catchphrase;
+    }
+
+    public function setCatchphrase(?string $catchphrase): static
+    {
+        $this->catchphrase = $catchphrase;
 
         return $this;
     }

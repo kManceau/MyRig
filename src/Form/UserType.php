@@ -30,6 +30,11 @@ class UserType extends AbstractType
                 'label' => 'Age',
                 'attr' => ['class' => 'form-control my-2', 'placeholder' => '00'],
             ])
+            ->add('catchphrase', TextType::class, [
+                'label' => 'Catchphrase (Optional, 255 characters max)',
+                'attr' => ['class' => 'form-control my-2', 'placeholder' => 'Catchphrase'],
+                'required' => false,
+            ])
             ->add('register', SubmitType::class, [
                 'label' => 'Register',
                 'attr' => ['class' => 'btn btn-primary mt-2'],

@@ -35,6 +35,7 @@ class UserController extends AbstractController
             $hash = $passwordHasher->hashPassword($user, $registrationForm->get('password')->getData());
             $user->setPassword($hash);
             $user->setAge($registrationForm->get('age')->getData());
+            $user->setCatchphrase($registrationForm->get('catchphrase')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'You are now successfully registered!');
