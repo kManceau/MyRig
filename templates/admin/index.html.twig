@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyRig! - Admin{% endblock %}
+
+{% block body %}
+    <section class="card text-white bg-dark container-lg">
+        <div class="card-body">
+            <h2>Administration</h2>
+            <div class="user-grid">
+                <div class="user">
+                    <a href="/admin/users" class="user-name text-light">
+                        <picture>
+                            <source srcset="/images/users/default.webp" type="image/webp">
+                            <img src="/images/users/default.jpg" alt="default-avatar"
+                                 class="user-avatar" loading="lazy"/>
+                        </picture>
+                    </a>
+                    <a href="/admin/users" class="user-name text-light">Users</a>
+                </div>
+            </div>
+    </section>
+    </div>
+{% endblock %}

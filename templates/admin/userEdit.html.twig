@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyRig! - Admin{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('javascript/adminSelectUser.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success container-lg">
+            <buton type="button" class="btn-close" data-bs-dismiss="alert"></buton>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <section class="card text-white bg-dark container-lg">
+        <div class="card-body">
+            <h2>Administration - {{ user.username }}</h2>
+                {% if file_exists('../public/images/users/' ~ user.id ~ '.webp') %}
+                    <picture>
+                        <source srcset="/images/users/{{ user.id }}.webp" type="image/webp">
+                        <img src="/images/users/{{ user.id }}.jpg" alt="{{ user.username }}-avatar"
+                             class="user-avatar mb-2" loading="lazy"/>
+                    </picture>
+                    <button id="delete-user-avatar-button" class="btn btn-danger my-2">Delete {{ user.username }} avatar</button>
+                {% else %}
+                    <picture>
+                        <source srcset="/images/users/default.webp" type="image/webp">
+                        <img src="/images/users/default.jpg" alt="default-avatar"
+                             class="user-avatar mb-2" loading="lazy"/>
+                    </picture>
+                {% endif %}
+            {{ form_start(userEditForm) }}
+                {{ form_row(userEditForm.username, { 'required': false }) }}
+                {{ form_row(userEditForm.password, { 'label': 'Change the password', 'required': false }) }}
+                {{ form_row(userEditForm.age, { 'required': false }) }}
+                {{ form_row(userEditForm.catchphrase, { 'required': false }) }}
+                {{ form_row(userEditForm.register, { 'label': 'Make changes', 'required': false }) }}
+            {{ form_end(userEditForm, {render_rest: false}) }}
+        </div>
+    </section>
+{% endblock %}
