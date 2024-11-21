@@ -21,11 +21,6 @@ abstract class Instrument
      #[ORM\Column(type: Types::TEXT, length: 200)]
      #[Assert\NotBlank]
      #[Assert\Length(min: 1, max: 200)]
-     private ?string $name = null;
-
-     #[ORM\Column(type: Types::TEXT, length: 200)]
-     #[Assert\NotBlank]
-     #[Assert\Length(min: 1, max: 200)]
      private ?string $model = null;
 
      #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -55,16 +50,6 @@ abstract class Instrument
     public function setId(?int $id): void
     {
         $this->id = $id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
     }
 
     public function getModel(): ?string

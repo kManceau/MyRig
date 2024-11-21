@@ -18,7 +18,7 @@
                         <option value="none" disabled selected>There is no instrument ...</option>
                     {% else %}
                         {% for instrument in instruments %}
-                            <option value="{{ instrument.id }}">{{ instrument.model }}</option>
+                            <option value="{{ instrument.id }}">{{ instrument.name }}</option>
                         {% endfor %}
                     {% endif %}
                 </select>
