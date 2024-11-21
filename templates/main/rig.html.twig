@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyRig! - Rig{% endblock %}
+
+{% block body %}
+    <section class="card text-white bg-dark container-lg">
+        <div class="card-body">
+            <h2>Your rig</h2>
+            {% if instruments is not empty %}
+                <p>You have Instruments !</p>
+            {% else %}
+                <p>You don't have any Instruments ... yet ! Want to add one ?</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

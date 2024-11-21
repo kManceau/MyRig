@@ -2,6 +2,8 @@
 namespace App\Entity;
 
 use App\Repository\InstrumentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
@@ -33,6 +35,17 @@ abstract class Instrument
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
     private ?string $description = null;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'instruments')]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -82,6 +95,30 @@ abstract class Instrument
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->users->removeElement($user);
+
+        return $this;
     }
 }
 
