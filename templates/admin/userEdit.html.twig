@@ -4,7 +4,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('javascript/adminSelectUser.js') }}"></script>
+    <script src="{{ asset('javascript/adminEditUser.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -25,7 +25,7 @@
                         <img src="/images/users/{{ user.id }}.jpg" alt="{{ user.username }}-avatar"
                              class="user-avatar mb-2" loading="lazy"/>
                     </picture>
-                    <button id="delete-user-avatar-button" class="btn btn-danger my-2">Delete {{ user.username }} avatar</button>
+                    <a id="delete-user-avatar-button" class="btn btn-danger my-2" href="/admin/user/delete/avatar/{{ user.id }}">Delete {{ user.username }} avatar</a>
                 {% else %}
                     <picture>
                         <source srcset="/images/users/default.webp" type="image/webp">
@@ -38,6 +38,11 @@
                 {{ form_row(userEditForm.password, { 'label': 'Change the password', 'required': false }) }}
                 {{ form_row(userEditForm.age, { 'required': false }) }}
                 {{ form_row(userEditForm.catchphrase, { 'required': false }) }}
+                {% if 'ROLE_ADMIN' in user.getroles() %}
+                    <a id="change-user-role" class="btn btn-danger my-2" href="/admin/user/role/{{ user.id }}">Remove {{ user.username }} Admin Role</a>
+                {% else %}
+                    <a id="change-user-role" class="btn btn-success my-2" href="/admin/user/role/{{ user.id }}">Make {{ user.username }} Admin</a>
+                {% endif %}
                 {{ form_row(userEditForm.register, { 'label': 'Make changes', 'required': false }) }}
             {{ form_end(userEditForm, {render_rest: false}) }}
         </div>
