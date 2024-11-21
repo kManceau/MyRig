@@ -18,38 +18,6 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/register', name: 'myrig_register')]
-    public function register(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
-    {
-        $registrationForm = $this->createForm(UserType::class);
-        $registrationForm->handleRequest($request);
-
-        if($registrationForm->isSubmitted() && $registrationForm->isValid()) {
-            $alreadyExisting = $userRepository->findOneBy(['username' => $registrationForm->get('username')->getData()]);
-            if($alreadyExisting) {
-                $this->addFlash('error', 'Username already exists.');
-                return $this->redirectToRoute('myrig_register');
-            }
-            $user = new User();
-            $user->setRoles(['ROLE_USER']);
-            $user->setUsername($registrationForm->get('username')->getData());
-            $hash = $passwordHasher->hashPassword($user, $registrationForm->get('password')->getData());
-            $user->setPassword($hash);
-            $user->setAge($registrationForm->get('age')->getData());
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $this->addFlash('success', 'You are now successfully registered!');
-            $providerKey = 'main';
-            $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
-            $this->container->get('security.token_storage')->setToken($token);
-            return $this->redirectToRoute('myrig_index');
-        }
-
-        return $this->render('security/register.html.twig', [
-            'registrationForm' => $registrationForm->createView(),
-        ]);
-    }
-
     #[Route(path: '/login', name: 'myrig_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

@@ -11,27 +11,22 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username', TextType::class, [
-                'label' => 'Username (4-18 characters)',
+                'label' => 'Username',
                 'attr' => ['class' => 'form-control my-2', 'placeholder' => 'Username'],
-            ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Password (at least 8 characters)',
-                'hash_property_path' => 'password',
-                'mapped' => false,
-                'attr' => ['class' => 'form-control my-2', 'placeholder' => 'Password'],
+                'disabled' => true,
             ])
             ->add('age', NumberType::class, [
                 'label' => 'Age',
                 'attr' => ['class' => 'form-control my-2', 'placeholder' => '00'],
             ])
-            ->add('register', SubmitType::class, [
-                'label' => 'Register',
+            ->add('submit', SubmitType::class, [
+                'label' => 'Submit',
                 'attr' => ['class' => 'btn btn-primary mt-2'],
             ])
         ;

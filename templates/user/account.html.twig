@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyRig! - My Account{% endblock %}
+
+{% block body %}
+    <section class="card text-white bg-dark container-lg">
+        <div class="card-body">
+            <div class="registration-text">
+                <h2 class="mb-4">My Account</h2>
+                <p>Modify your data. You can't change your password because I was too lazy for now ...</p>
+            </div>
+            <div class="account-form my-5">
+                {{ form_start(accountForm) }}
+                {{ form_end(accountForm) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}
