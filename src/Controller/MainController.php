@@ -20,7 +20,7 @@ class MainController extends AbstractController
     #[Route('/users', name: 'myrig_users')]
     public function users(UserRepository $userRepository): Response
     {
-        $userList = $userRepository->findAll();
+        $userList = $userRepository->findBy([], ['username' => 'ASC']);
 
         return $this->render('main/users.html.twig', [
             'users' => $userList,
