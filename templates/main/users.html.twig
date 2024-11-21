@@ -23,7 +23,7 @@
                                          class="user-avatar" loading="lazy"/>
                                 </picture>
                             {% endif %}
-                        <a href="#" class="user-name text-light">{{ user.username }}</a>
+                        <a href="#" class="user-name text-light">{{ user.username }} {% if 'ROLE_ADMIN' in user.getroles() %}{{ ' (Big Boss Here)' }}{% endif %}</a>
                     </div>
                 {% endfor %}
             </div>
