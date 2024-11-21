@@ -18,7 +18,7 @@
         <div class="card-body">
             <h2>Administration - Users</h2>
             <label class="form-label" for="user-select">Select the user to manage</label>
-            <select class="form-select my-2" name="user-select" id="user-selector">
+            <select class="form-select my-2" name="user-select" id="user-select">
                 {% for user in users %}
                 <option value="{{ user.id }}">{{ user.username }}{% if 'ROLE_ADMIN' in user.getroles() %}{{ ' - ADMIN' }}{% endif %}</option>
                 {% endfor %}

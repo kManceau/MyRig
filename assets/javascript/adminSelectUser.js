@@ -1,5 +1,5 @@
 const button = document.getElementById("select-user-button");
-const selector = document.getElementById("user-selector");
+const selector = document.getElementById("user-select");
 
 button.addEventListener("click", (e) => {
     e.preventDefault();

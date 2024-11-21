@@ -6,11 +6,24 @@
     <section class="card text-white bg-dark container-lg">
         <div class="card-body">
             <h2>Your rig</h2>
-            {% if instruments is not empty %}
+            {% if rig is not empty %}
                 <p>You have Instruments !</p>
             {% else %}
                 <p>You don't have any Instruments ... yet ! Want to add one ?</p>
             {% endif %}
+            <form action="#">
+                <label class="form-label" for="instrument-select">Select an existing instrument</label>
+                <select class="form-select my-2" name="instrument-select" id="instrument-select">
+                    {% if instruments is empty %}
+                        <option value="none" disabled selected>There is no instrument ...</option>
+                    {% else %}
+                        {% for instrument in instruments %}
+                            <option value="{{ instrument.id }}">{{ instrument.model }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </form>
+            <button class="btn btn-primary" value="{{ app.user.id }}">Add this instrument</button>
         </div>
     </section>
 {% endblock %}

@@ -29,10 +29,11 @@ class MainController extends AbstractController
     }
 
     #[Route('/rig', name: 'myrig_rig')]
-    public function rig(UserRepository $userRepository): Response
+    public function rig(UserRepository $userRepository, InstrumentRepository $instrumentRepository): Response
     {
         return $this->render('main/rig.html.twig', [
-            'instruments' => $userRepository->findOneBy(['id' => $this->getUser()->getId()])->getInstruments(),
+            'rig' => $userRepository->findOneBy(['id' => $this->getUser()->getId()])->getInstruments(),
+            'instruments' => $instrumentRepository->findAll(),
         ]);
     }
 }
