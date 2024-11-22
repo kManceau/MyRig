@@ -2,6 +2,11 @@
 
 {% block title %}MyRig! - Rig{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('javascript/instrumentForm.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <section class="card text-white bg-dark container-lg">
         <div class="card-body">
@@ -11,19 +16,34 @@
             {% else %}
                 <p>You don't have any Instruments ... yet ! Want to add one ?</p>
             {% endif %}
-            <form action="#">
+            <form action="#" id="instrument-form">
                 <label class="form-label" for="instrument-select">Select an existing instrument</label>
                 <select class="form-select my-2" name="instrument-select" id="instrument-select">
                     {% if instruments is empty %}
                         <option value="none" disabled selected>There is no instrument ...</option>
                     {% else %}
                         {% for instrument in instruments %}
-                            <option value="{{ instrument.id }}">{{ instrument.name }}</option>
+                            <option value="{{ instrument.id }}">{{instrument.brand.name ~ ' ' ~ instrument.name }}</option>
                         {% endfor %}
                     {% endif %}
                 </select>
+                <button class="btn btn-primary mb-4" value="{{ app.user.id }}" id="add-instrument">Add this instrument</button>
             </form>
-            <button class="btn btn-primary" value="{{ app.user.id }}">Add this instrument</button>
+            <p class="my-3">Or you can create a new one :</p>
+            <form action="#" id="brand-form">
+                <label class="form-label" for="brand-select">Select an existing brand</label>
+                <select class="form-select my-2" name="brand-select" id="brand-select">
+                {% if brands is empty %}
+                    <option value="none" disabled selected>There is no brand ...</option>
+                {% else %}
+                        <option value="none" selected>Not in the list ?</option>
+                    {% for brand in brands %}
+                        <option value="{{ brand.id }}">{{brand.name }}</option>
+                    {% endfor %}
+                {% endif %}
+                </select>
+            </form>
+                <button class="btn btn-primary" id="add-brand">Add a new brand</button>
         </div>
     </section>
 {% endblock %}

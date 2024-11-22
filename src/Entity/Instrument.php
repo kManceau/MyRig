@@ -37,6 +37,10 @@ abstract class Instrument
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'instruments')]
     private Collection $users;
 
+    #[ORM\ManyToOne(inversedBy: 'instruments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Brand $brand = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -105,68 +109,16 @@ abstract class Instrument
 
         return $this;
     }
-}
 
-#[ORM\Entity]
-class Piano extends Instrument
-{
-    #[ORM\Column(type: Types::SMALLINT)]
-    #[Assert\NotBlank]
-    private ?int $key_number = null;
-
-    public function getKeyNumber(): ?int
+    public function getBrand(): ?Brand
     {
-        return $this->key_number;
+        return $this->brand;
     }
 
-    public function setKeyNumber(?int $key_number): void
+    public function setBrand(?Brand $brand): static
     {
-        $this->key_number = $key_number;
-    }
-}
+        $this->brand = $brand;
 
-#[ORM\Entity]
-class Guitar extends Instrument
-{
-    #[ORM\Column(type: Types::SMALLINT)]
-    #[Assert\NotBlank]
-    private ?int $string_number = null;
-
-    #[ORM\Column(type: Types::SMALLINT)]
-    #[Assert\NotBlank]
-    private ?int $fret_number = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank]
-    private ?string $pickups = null;
-
-    public function getStringNumber(): ?int
-    {
-        return $this->string_number;
-    }
-
-    public function setStringNumber(?int $string_number): void
-    {
-        $this->string_number = $string_number;
-    }
-
-    public function getFretNumber(): ?int
-    {
-        return $this->fret_number;
-    }
-
-    public function setFretNumber(?int $fret_number): void
-    {
-        $this->fret_number = $fret_number;
-    }
-
-    public function getPickups(): ?string
-    {
-        return $this->pickups;
-    }
-
-    public function setPickups(?string $pickups): void
-    {
-        $this->pickups = $pickups;
+        return $this;
     }
 }
