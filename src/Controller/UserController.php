@@ -40,7 +40,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             if ($registrationForm->get('avatar')->getData()) {
-                $imageService->uploadImages($registrationForm->get('avatar')->getData(), $user->getId());
+                $imageService->uploadImages($registrationForm->get('avatar')->getData(), $user->getId(), 'users');
             }
             $this->addFlash('success', 'You are now successfully registered!');
             $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
@@ -66,7 +66,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             if ($accountForm->get('avatar')->getData()) {
-                $imageService->uploadImages($accountForm->get('avatar')->getData(), $user->getId());
+                $imageService->uploadImages($accountForm->get('avatar')->getData(), $user->getId(), 'users');
             }
             $this->addFlash('success', 'Account Succesfully updated!');
             return $this->redirectToRoute('myrig_account');
@@ -83,7 +83,7 @@ class UserController extends AbstractController
         $user = $userRepository->findOneBy(['username' => $this->getUser()->getUsername()]);
         $entityManager->remove($user);
         $entityManager->flush();
-        $imageService->deleteImages($id);
+        $imageService->deleteImages($id, 'users');
         $this->addFlash('success', 'Account Succesfully deleted! :(');
         $this->container->get('security.token_storage')->setToken(null);
         return $this->redirectToRoute('myrig_index');

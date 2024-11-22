@@ -10,6 +10,7 @@ use App\Form\GuitarType;
 use App\Repository\BrandRepository;
 use App\Repository\InstrumentRepository;
 use App\Repository\UserRepository;
+use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,7 +62,7 @@ class MainController extends AbstractController
     }
 
     #[Route('/add_guitar', name: 'myrig_add_guitar', methods: ['POST'])]
-    public function addGuitar(Request $request, BrandRepository $brandRepository, EntityManagerInterface $entityManager): Response
+    public function addGuitar(Request $request, BrandRepository $brandRepository, EntityManagerInterface $entityManager, ImageService $imageService): Response
     {
         $guitar = new Guitar();
         $brand = $brandRepository->findOneBy(['id' => $request->request->get('brand')]);
@@ -74,6 +75,7 @@ class MainController extends AbstractController
         $guitar->setPickups($request->request->get('pickups'));
         $entityManager->persist($guitar);
         $entityManager->flush();
+        $imageService->uploadImages($request->files->get('photo'), $guitar->getId(), 'instruments');
         return $this->redirectToRoute('myrig_rig');
     }
 
@@ -89,6 +91,7 @@ class MainController extends AbstractController
         $piano->setKeyNumber($request->request->get('key'));
         $entityManager->persist($piano);
         $entityManager->flush();
+        $imageService->uploadImages($request->files->get('photo'), $guitar->getId(), 'instruments');
         return $this->redirectToRoute('myrig_rig');
     }
 }

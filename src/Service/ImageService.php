@@ -30,21 +30,21 @@ class ImageService
         return $resizedImage;
     }
 
-    public function uploadImages($img, $id):void
+    public function uploadImages($img, $id, $folder):void
     {
         $image = $this->createImages($img);
-        imagejpeg($image, 'images/users/'.$id.'.jpg', 100);
-        imagewebp($image, 'images/users/'.$id.'.webp', 100);
+        imagejpeg($image, 'images/'.$folder.'/'.$id.'.jpg', 100);
+        imagewebp($image, 'images/'.$folder.'/'.$id.'.webp', 100);
         imagedestroy($image);
     }
 
-    public function deleteImages($id):void
+    public function deleteImages($id, $folder):void
     {
-        if(file_exists('images/users/'.$id.'.jpg')){
-            unlink('images/users/'.$id.'.jpg');
+        if(file_exists('images/'.$folder.'/'.$id.'.jpg')){
+            unlink('images/'.$folder.'/'.$id.'.jpg');
         }
-        if(file_exists('images/users/'.$id.'.webp')){
-            unlink('images/users/'.$id.'.webp');
+        if(file_exists('images/'.$folder.'/'.$id.'.webp')){
+            unlink('images/'.$folder.'/'.$id.'.webp');
         }
     }
 }

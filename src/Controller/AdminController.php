@@ -64,7 +64,7 @@ class AdminController extends AbstractController
     #[Route('/admin/user/delete/avatar/{id}', name: 'myrig_admin_delete_users_avatar')]
     public function adminDeleteUserAvatar($id, ImageService $imageService): Response
     {
-        $imageService->deleteImages($id);
+        $imageService->deleteImages($id, 'users');
         $this->addFlash('success', 'Avatar successfully removed.');
         return $this->redirectToRoute('myrig_admin_users');
     }

@@ -69,6 +69,7 @@ const appendInstrumentForm = () => {
             instrumentForm.setAttribute("action", "/add_piano");
         }
         instrumentForm.setAttribute("id", "newInstrument");
+        instrumentForm.setAttribute("enctype", "multipart/form-data");
         instrumentForm.className = "mt-4";
         // MODEL NAME
         const modelNameLabel = document.createElement("label");
@@ -160,6 +161,17 @@ const appendInstrumentForm = () => {
         brandId.setAttribute("name", "brand");
         brandId.setAttribute("value", brandSelect.value);
         instrumentForm.appendChild(brandId);
+        // INPUT IMAGE
+        const imageUploadLabel = document.createElement("label");
+        imageUploadLabel.setAttribute("for", "photo");
+        imageUploadLabel.className = "form-label my-2";
+        imageUploadLabel.textContent = "Photo";
+        const imageUpload = document.createElement("input");
+        imageUpload.setAttribute("type", "file");
+        imageUpload.setAttribute("name", "photo");
+        imageUpload.className = "form-control my-2";
+        instrumentForm.appendChild(imageUploadLabel);
+        instrumentForm.appendChild(imageUpload);
         // SUBMIT BUTTON
         const submitInstrument = document.createElement("input");
         submitInstrument.setAttribute("type", "submit");
