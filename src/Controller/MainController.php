@@ -27,6 +27,16 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/instruments', name: 'myrig_instruments')]
+    public function instruments(InstrumentRepository $instrumentRepository): Response
+    {
+        $instruments = $instrumentRepository->findAll();
+        return $this->render('main/instruments.html.twig', [
+            'instruments' => $instruments,
+        ]);
+    }
+
+
     #[Route('/users', name: 'myrig_users')]
     public function users(UserRepository $userRepository): Response
     {

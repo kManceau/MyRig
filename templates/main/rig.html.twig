@@ -12,7 +12,18 @@
         <div class="card-body">
             <h2>Your rig</h2>
             {% if rig is not empty %}
-                <p>You have Instruments !</p>
+                <div class="user-grid mb-5">
+                    {% for instru in rig %}
+                        <div class="user">
+                            <picture>
+                                <source srcset="/images/instruments/{{ instru.id }}.webp" type="image/webp">
+                                <img src="/images/instruments/{{ instru.id }}.jpg" alt="{{ instru.model }}-avatar"
+                                     class="user-avatar" loading="lazy"/>
+                            </picture>
+                            <a href="#" class="user-name text-light">{{ instru.brand.name ~ instru.model }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
             {% else %}
                 <p>You don't have any Instruments ... yet ! Want to add one ?</p>
             {% endif %}
