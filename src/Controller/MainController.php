@@ -80,7 +80,7 @@ class MainController extends AbstractController
     }
 
     #[Route('/add_piano', name: 'myrig_add_piano', methods: ['POST'])]
-    public function addPiano(Request $request, BrandRepository $brandRepository, EntityManagerInterface $entityManager): Response
+    public function addPiano(Request $request, BrandRepository $brandRepository, EntityManagerInterface $entityManager, ImageService $imageService): Response
     {
         $piano = new Piano();
         $brand = $brandRepository->findOneBy(['id' => $request->request->get('brand')]);
@@ -91,7 +91,18 @@ class MainController extends AbstractController
         $piano->setKeyNumber($request->request->get('key'));
         $entityManager->persist($piano);
         $entityManager->flush();
-        $imageService->uploadImages($request->files->get('photo'), $guitar->getId(), 'instruments');
+        $imageService->uploadImages($request->files->get('photo'), $piano->getId(), 'instruments');
+        return $this->redirectToRoute('myrig_rig');
+    }
+
+    #[Route('/link_instru_user/{instru}', name: 'myrig_link_instru')]
+    public function linkInstruUser($instru, InstrumentRepository $instrumentRepository, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $instrument = $instrumentRepository->findOneBy(['id' => $instru]);
+        $instrument->addUser($user);
+        $entityManager->persist($instrument);
+        $entityManager->flush();
         return $this->redirectToRoute('myrig_rig');
     }
 }

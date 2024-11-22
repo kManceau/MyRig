@@ -180,3 +180,12 @@ const appendInstrumentForm = () => {
         newBrandButton.insertAdjacentElement('afterend', instrumentForm);
     }
 }
+
+// LINK AN INSTRUMENT TO A USER
+const instrumentSelected = document.getElementById("instrument-select");
+const addInstrumentButton = document.getElementById("add-instrument");
+
+addInstrumentButton.addEventListener("click", () => {
+    document.location.href = '/link_instru_user/' + instrumentSelected.value;
+})
+
