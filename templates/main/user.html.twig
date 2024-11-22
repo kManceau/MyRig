@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyRig! - Users{% endblock %}
+
+{% block body %}
+    <section class="card text-white bg-dark container-lg">
+        <div class="card-body">
+            <h2>{{ user.username }} Rig </h2>
+            <div class="user-grid">
+                {% for instru in rig %}
+                    <div class="user">
+                        <picture>
+                            <source srcset="/images/instruments/{{ instru.id }}.webp" type="image/webp">
+                            <img src="/images/instruments/{{ instru.id }}.jpg" alt="{{ instru.model }}-avatar"
+                                 class="user-avatar" loading="lazy"/>
+                        </picture>
+                        <a href="#" class="user-name text-light">{{ instru.brand.name ~ ' - ' ~ instru.model }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

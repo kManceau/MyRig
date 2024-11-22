@@ -47,6 +47,18 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/user/{id}', name: 'myrig_user')]
+    public function user($id, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findOneBy(['id' => $id]);
+        $rig = $user->getInstruments();
+
+        return $this->render('main/user.html.twig', [
+            'user' => $user,
+            'rig' => $rig,
+        ]);
+    }
+
     #[Route('/rig', name: 'myrig_rig')]
     public function rig(UserRepository $userRepository, InstrumentRepository $instrumentRepository, BrandRepository $brandRepository, Request $request): Response
     {
