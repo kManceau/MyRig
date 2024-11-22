@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Brand;
 use App\Entity\Guitar;
+use App\Entity\Piano;
 use App\Form\BrandType;
 use App\Form\GuitarType;
 use App\Repository\BrandRepository;
@@ -55,6 +56,38 @@ class MainController extends AbstractController
         $brand->setCreatedAt($date);
         $brand->setHistory($request->get('history'));
         $entityManager->persist($brand);
+        $entityManager->flush();
+        return $this->redirectToRoute('myrig_rig');
+    }
+
+    #[Route('/add_guitar', name: 'myrig_add_guitar', methods: ['POST'])]
+    public function addGuitar(Request $request, BrandRepository $brandRepository, EntityManagerInterface $entityManager): Response
+    {
+        $guitar = new Guitar();
+        $brand = $brandRepository->findOneBy(['id' => $request->request->get('brand')]);
+        $guitar->setBrand($brand);
+        $guitar->setModel($request->request->get('model'));
+        $guitar->setCreatedAt(new \DateTimeImmutable($request->request->get('date')));
+        $guitar->setDescription($request->request->get('description'));
+        $guitar->setStringNumber($request->request->get('strings'));
+        $guitar->setFretNumber($request->request->get('fret'));
+        $guitar->setPickups($request->request->get('pickups'));
+        $entityManager->persist($guitar);
+        $entityManager->flush();
+        return $this->redirectToRoute('myrig_rig');
+    }
+
+    #[Route('/add_piano', name: 'myrig_add_piano', methods: ['POST'])]
+    public function addPiano(Request $request, BrandRepository $brandRepository, EntityManagerInterface $entityManager): Response
+    {
+        $piano = new Piano();
+        $brand = $brandRepository->findOneBy(['id' => $request->request->get('brand')]);
+        $piano->setBrand($brand);
+        $piano->setModel($request->request->get('model'));
+        $piano->setCreatedAt(new \DateTimeImmutable($request->request->get('date')));
+        $piano->setDescription($request->request->get('description'));
+        $piano->setKeyNumber($request->request->get('key'));
+        $entityManager->persist($piano);
         $entityManager->flush();
         return $this->redirectToRoute('myrig_rig');
     }

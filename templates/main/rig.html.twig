@@ -23,27 +23,33 @@
                         <option value="none" disabled selected>There is no instrument ...</option>
                     {% else %}
                         {% for instrument in instruments %}
-                            <option value="{{ instrument.id }}">{{instrument.brand.name ~ ' ' ~ instrument.name }}</option>
+                            <option value="{{ instrument.id }}">{{ instrument.brand.name ~ ' - ' ~  instrument.model }}</option>
                         {% endfor %}
                     {% endif %}
                 </select>
-                <button class="btn btn-primary mb-4" value="{{ app.user.id }}" id="add-instrument">Add this instrument</button>
+                <button class="btn btn-primary mb-4" value="{{ app.user.id }}" id="add-instrument">Add this instrument
+                </button>
             </form>
             <p class="my-3">Or you can create a new one :</p>
+            <select class="form-select my-2" name="type-select" id="type-select">
+                <option value="guitar">Guitar</option>
+                <option value="piano">Piano</option>
+            </select>
             <form action="#" id="brand-form">
                 <label class="form-label" for="brand-select">Select an existing brand</label>
                 <select class="form-select my-2" name="brand-select" id="brand-select">
-                {% if brands is empty %}
-                    <option value="none" disabled selected>There is no brand ...</option>
-                {% else %}
+                    {% if brands is empty %}
+                        <option value="none" disabled selected>There is no brand ...</option>
+                    {% else %}
                         <option value="none" selected>Not in the list ?</option>
-                    {% for brand in brands %}
-                        <option value="{{ brand.id }}">{{brand.name }}</option>
-                    {% endfor %}
-                {% endif %}
+                        {% for brand in brands %}
+                            <option value="{{ brand.id }}">{{ brand.name }}</option>
+                        {% endfor %}
+                    {% endif %}
                 </select>
             </form>
-                <button class="btn btn-primary" id="add-brand">Add a new brand</button>
+            <button class="btn btn-primary mb-4" id="add-brand">Add a new brand</button>
+            <p id="must-select">You must select or add brand before ...</p>
         </div>
     </section>
 {% endblock %}
